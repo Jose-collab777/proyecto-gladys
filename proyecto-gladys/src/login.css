@@ -1,0 +1,104 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #221829;
+    height: 100vh;
+}
+
+.formulario{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: whitesmoke;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.formulario h1{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+    border-bottom: 1px solid silver;
+} 
+
+.username{
+    position: relative;
+    border-bottom: 2px solid silver;
+    margin: 30px 0;
+}
+
+.username input{
+    width: 100%;
+    padding: 0 0 5px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.username label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: silver;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.username span::before{
+    content: ' ';
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    width: 0%;
+    height: 2px;
+    background: #a39f9e;
+    transition: .5s;
+}
+
+.username input:focus ~ label,
+.username input:valid ~ label {
+    top: -7px;
+    
+    color: #a39f9e;
+}
+
+.username input:focus ~ span::before{
+    width: 100%;
+}
+
+.iniciarSesion{
+    margin: 30px 0;
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 4px solid silver;
+}
+
+.iniciarSesion .btn{
+    width: 100%;
+    padding: 5%;
+    font-size: 16px;
+    background: rgb(190, 189, 189);
+    color: rgb(49, 48, 48);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+.iniciarSesion .btn:hover{
+    background: #a5a3a3;
+}
+.olvideContraseña{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 2px;
+    border-bottom: 1px solid silver;
+}
