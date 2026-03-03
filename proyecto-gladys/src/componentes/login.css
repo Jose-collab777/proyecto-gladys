@@ -2,8 +2,9 @@
 body{
     margin: 0;
     padding: 0;
-    background-color: #221829;
+    background-color: #3a1e4e;
     height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .formulario{
@@ -22,6 +23,7 @@ body{
     text-align: center;
     font-size: 22px;
     border-bottom: 1px solid silver;
+    font-family: Arial, Helvetica, sans-serif; /* Puedes usar otra fuente solo aquí */
 } 
 
 .username{
@@ -43,7 +45,7 @@ body{
     position: absolute;
     top: 50%;
     left: 5px;
-    color: silver;
+    color: rgb(73, 70, 70);
     transform: translateY(-50%);
     font-size: 16px;
     pointer-events: none;
@@ -95,10 +97,20 @@ body{
 .iniciarSesion .btn:hover{
     background: #a5a3a3;
 }
-.olvideContraseña{
-    margin: 0;
+
+.olvideContraseña {
+    margin: 10px 0;
     padding: 0 0 20px;
     text-align: center;
-    font-size: 2px;
+    font-size: 14px; 
     border-bottom: 1px solid silver;
 }
+
+.linkBtn {
+    background: none;
+    border: none;
+    color: #3a1e4e;
+    cursor: pointer;
+    text-decoration: underline;
+}
+

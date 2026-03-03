@@ -1,10 +1,9 @@
 import React from "react";
-import "./login.css"; // tu CSS personalizado
+import "./componentes/login.css"; // Si están en la misma carpeta, usa "./login.css"
 
 const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí podrías manejar la lógica de login con React Router
     window.location.href = "/home"; 
   };
 
@@ -12,17 +11,19 @@ const Login = () => {
     <div className="formulario">
       <h1>Iniciar Sesión</h1>
       <form onSubmit={handleSubmit}>
-        <div className="inputBox">
+        <div className="username">
           <input type="text" name="username" required />
+          <span></span>
           <label>Usuario</label>
         </div>
 
-        <div className="inputBox">
+        <div className="username">
           <input type="password" name="password" required />
+          <span></span>
           <label>Contraseña</label>
         </div>
 
-        <div className="acciones">
+        <div className="iniciarSesion">
           <button type="submit" className="btn">Iniciar Sesión</button>
         </div>
 
