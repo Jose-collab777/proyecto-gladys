@@ -1,20 +1,22 @@
 
-body{
+/*body{
     margin: 0;
     padding: 0;
     background-color: #3a1e4e;
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
 }
-
+*/
 .formulario{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background: whitesmoke;
+    background: rgba(245, 245, 245, 0.952);
     padding: 40px;
     border-radius: 10px;
+    
+    
 }
 
 .formulario h1{

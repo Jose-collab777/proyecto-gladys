@@ -1,10 +1,13 @@
 import React from "react";
-import "./componentes/login.css"; // Si están en la misma carpeta, usa "./login.css"
+import { useNavigate } from "react-router-dom";
+import "./componentes/login.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    window.location.href = "/home"; 
+    navigate("/home"); 
   };
 
   return (
@@ -24,21 +27,29 @@ const Login = () => {
         </div>
 
         <div className="iniciarSesion">
-          <button type="submit" className="btn">Iniciar Sesión</button>
+          <button type="submit" className="btn">
+            Iniciar Sesión
+          </button>
         </div>
 
         <div className="olvideContraseña">
           <button 
             type="button" 
             className="linkBtn"
-            onClick={() => (window.location.href = "/passwordChange")}
+            onClick={() => navigate("/passwordChange")}
           >
             Olvidé mi contraseña
           </button>
         </div>
 
         <div className="registro">
-          ¿No tienes una cuenta? <a href="/registro">Regístrate</a>
+          ¿No tienes una cuenta?{" "}
+          <span 
+            style={{cursor:"pointer", color:"blue"}}
+            onClick={() => navigate("/registro")}
+          >
+            Regístrate
+          </span>
         </div>
       </form>
     </div>
