@@ -5,10 +5,11 @@ import "./componentes/login.css";
 const Login = () => {
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/home"); 
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+  localStorage.setItem("token", "autenticado"); // ← agrega esta línea
+  navigate("/");
+};
 
   return (
     <div className="formulario">

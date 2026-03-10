@@ -1,38 +1,87 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import "./AdminLayout.css";
 
-function AdminLayout() {
+const navItems = [
+  { to: "/",          icon: "▦",  label: "Dashboard"  },
+  { to: "/ventas",    icon: "🍣", label: "Ventas"     },
+  { to: "/nomina",    icon: "👥", label: "Nómina"     },
+  { to: "/finanzas",  icon: "📊", label: "Finanzas"   },
+  { to: "/inventario",icon: "📦", label: "Inventario" },
+];
+
+export default function AdminLayout() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
-    <div className="d-flex">
-      
-      {/* Sidebar */}
-      <div className="bg-dark text-white p-3 vh-100" style={{ width: "250px" }}>
-        <h4 className="text-center mb-4">🍣 Sushi Admin</h4>
+    <div className="admin-shell">
 
-        <ul className="nav flex-column">
-          <li className="nav-item">
-            <Link className="nav-link text-white" to="/dashboard">📊 Dashboard</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link text-white" to="/ventas">💰 Ventas</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link text-white" to="/nomina">👥 Nómina</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link text-white" to="/finanzas">📈 Finanzas</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link text-white" to="/inventario">📦 Inventario</Link>
-          </li>
-        </ul>
-      </div>
+      {/* ── SIDEBAR ── */}
+      <aside className="sidebar">
 
-      {/* Contenido */}
-      <div className="flex-grow-1 p-4 bg-light">
+        {/* LOGO */}
+        <div className="sidebar-logo">
+          <div className="logo-icon">🍣</div>
+          <div className="logo-text">
+            <span className="logo-name">SakuraRoll</span>
+            <span className="logo-jp">桜ロール · Admin</span>
+          </div>
+        </div>
+
+        {/* NAV */}
+        <nav className="sidebar-nav">
+          <span className="nav-section-label">Principal</span>
+
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === "/"}
+              className={({ isActive }) =>
+                "nav-item" + (isActive ? " active" : "")
+              }
+            >
+              <span className="nav-icon">{item.icon}</span>
+              <span className="nav-label">{item.label}</span>
+              <span className="nav-arrow">›</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        {/* DIVIDER */}
+        <div className="sidebar-divider" />
+
+        {/* STATUS BADGE */}
+        <div className="status-badge">
+          <div className="status-dot" />
+          <span>Servicio activo</span>
+        </div>
+
+        {/* FOOTER */}
+        <div className="sidebar-footer">
+          <div className="user-info">
+            <div className="user-avatar">CN</div>
+            <div className="user-details">
+              <span className="user-name">Carlos N.</span>
+              <span className="user-role">Gerente</span>
+            </div>
+          </div>
+          <button className="logout-btn" onClick={handleLogout} title="Cerrar sesión">
+            ⏻
+          </button>
+        </div>
+
+      </aside>
+
+      {/* ── CONTENT ── */}
+      <main className="admin-content">
         <Outlet />
-      </div>
+      </main>
+
     </div>
   );
 }
-
-export default AdminLayout;
