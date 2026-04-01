@@ -2,7 +2,6 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "./AdminLayout.css";
 
 const navItems = [
-  { to: "/",          icon: "▦",  label: "Dashboard"  },
   { to: "/ventas",    icon: "🍣", label: "Ventas"     },
   { to: "/nomina",    icon: "👥", label: "Nómina"     },
   { to: "/finanzas",  icon: "📊", label: "Finanzas"   },
@@ -27,7 +26,7 @@ export default function AdminLayout() {
         <div className="sidebar-logo">
           <div className="logo-icon">🍣</div>
           <div className="logo-text">
-            <span className="logo-name">SakuraRoll</span>
+            <span className="logo-name">SANJI</span>
             <span className="logo-jp">桜ロール · Admin</span>
           </div>
         </div>
@@ -55,11 +54,7 @@ export default function AdminLayout() {
         {/* DIVIDER */}
         <div className="sidebar-divider" />
 
-        {/* STATUS BADGE */}
-        <div className="status-badge">
-          <div className="status-dot" />
-          <span>Servicio activo</span>
-        </div>
+      
 
         {/* FOOTER */}
         <div className="sidebar-footer">

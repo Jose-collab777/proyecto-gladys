@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLayout from "./componentes/AdminLayout";
-import Dashboard from "./Dashboard";
-import Ventas from "./Ventas";
+
+import Ventas from "./componentes/Ventas";
 import Nomina from "./Nomina";
 import Finanzas from "./Finanzas";
 import Inventario from "./Inventario";
@@ -28,7 +28,7 @@ function App() {
           </RutaPrivada>
         }
       >
-        <Route index element={<Dashboard />} />
+       
         <Route path="ventas" element={<Ventas />} />
         <Route path="nomina" element={<Nomina />} />
         <Route path="finanzas" element={<Finanzas />} />

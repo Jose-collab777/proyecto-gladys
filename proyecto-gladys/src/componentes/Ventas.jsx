@@ -1,11 +1,11 @@
 import { useState } from "react";
-import "./componentes/Ventas.css";
-
+import "./Ventas.css";
+import ModalVenta from "./ModalVenta"
 const ventasData = {
   "7d": [
-    { day: "Lun", sales: 12400, orders: 98 },
+    { day: "Lun", sales: 12400, orders: 98  },
     { day: "Mar", sales: 15800, orders: 120 },
-    { day: "Mié", sales: 11200, orders: 87 },
+    { day: "Mié", sales: 11200, orders: 87  },
     { day: "Jue", sales: 17600, orders: 138 },
     { day: "Vie", sales: 22000, orders: 175 },
     { day: "Sáb", sales: 24800, orders: 196 },
@@ -25,11 +25,12 @@ const ventasData = {
 };
 
 export default function Ventas() {
-  const [seg, setSeg] = useState("7d");
-  const data = ventasData[seg];
-  const maxS = Math.max(...data.map((d) => d.sales));
-  const maxO = Math.max(...data.map((d) => d.orders));
+  const [seg, setSeg]               = useState("7d");
+  const [modalAbierto, setModalAbierto] = useState(false);
 
+  const data        = ventasData[seg];
+  const maxS        = Math.max(...data.map((d) => d.sales));
+  const maxO        = Math.max(...data.map((d) => d.orders));
   const totalVentas  = data.reduce((a, d) => a + d.sales, 0);
   const totalOrdenes = data.reduce((a, d) => a + d.orders, 0);
   const ticketProm   = Math.round(totalVentas / totalOrdenes);
@@ -46,7 +47,9 @@ export default function Ventas() {
         <div className="ventas-header-right">
           <div className="time-chip">📅 Lunes 9 Mar, 2026</div>
           <button className="btn btn-ghost">📥 Exportar</button>
-          <button className="btn btn-red">＋ Registrar Venta</button>
+          <button className="btn btn-red" onClick={() => setModalAbierto(true)}>
+            ＋ Registrar Venta
+          </button>
         </div>
       </div>
 
@@ -78,7 +81,7 @@ export default function Ventas() {
         </div>
       </div>
 
-      {/* ── GRÁFICA ANCHO COMPLETO ── */}
+      {/* ── GRÁFICA ── */}
       <div className="v-card">
         <div className="v-card-hd">
           <div>
@@ -169,6 +172,17 @@ export default function Ventas() {
           </tbody>
         </table>
       </div>
+
+      {/* ── MODAL ── */}
+      {modalAbierto && (
+        <ModalVenta
+          onClose={() => setModalAbierto(false)}
+          onGuardar={(venta) => {
+            console.log("Venta a enviar al backend:", venta);
+            setModalAbierto(false);
+          }}
+        />
+      )}
 
     </div>
   );
