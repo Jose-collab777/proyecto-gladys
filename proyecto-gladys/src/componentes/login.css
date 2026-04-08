@@ -1,22 +1,20 @@
-
-/*body{
+body{
     margin: 0;
     padding: 0;
-    background-color: #3a1e4e;
+    background-color: #121212;
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
 }
-*/
+
 .formulario{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background: rgba(245, 245, 245, 0.952);
+    background: #1e1e1e;
     padding: 40px;
     border-radius: 10px;
-    
-    
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
 .formulario h1{
@@ -24,13 +22,13 @@
     padding: 0 0 20px;
     text-align: center;
     font-size: 22px;
-    border-bottom: 1px solid silver;
-    font-family: Arial, Helvetica, sans-serif; /* Puedes usar otra fuente solo aquí */
-} 
+    border-bottom: 1px solid #333;
+    color: #f1f1f1;
+}
 
 .username{
     position: relative;
-    border-bottom: 2px solid silver;
+    border-bottom: 2px solid #444;
     margin: 30px 0;
 }
 
@@ -41,13 +39,14 @@
     border: none;
     outline: none;
     background: transparent;
+    color: #fff;
 }
 
 .username label{
     position: absolute;
     top: 50%;
     left: 5px;
-    color: rgb(73, 70, 70);
+    color: #aaa;
     transform: translateY(-50%);
     font-size: 16px;
     pointer-events: none;
@@ -61,15 +60,14 @@
     left: 0px;
     width: 0%;
     height: 2px;
-    background: #a39f9e;
+    background: #f8f0f0;
     transition: .5s;
 }
 
 .username input:focus ~ label,
 .username input:valid ~ label {
     top: -7px;
-    
-    color: #a39f9e;
+    color: #bbb;
 }
 
 .username input:focus ~ span::before{
@@ -80,15 +78,15 @@
     margin: 30px 0;
     padding: 20px 0;
     text-align: center;
-    border-bottom: 4px solid silver;
+    border-bottom: 1px solid #333;
 }
 
 .iniciarSesion .btn{
     width: 100%;
     padding: 5%;
     font-size: 16px;
-    background: rgb(190, 189, 189);
-    color: rgb(49, 48, 48);
+    background: #333;
+    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -97,7 +95,7 @@
 }
 
 .iniciarSesion .btn:hover{
-    background: #a5a3a3;
+    background: #555;
 }
 
 .olvideContraseña {
@@ -105,14 +103,18 @@
     padding: 0 0 20px;
     text-align: center;
     font-size: 14px; 
-    border-bottom: 1px solid silver;
+    border-bottom: 1px solid #333;
+    color: #ccc; /* MÁS CLARO */
 }
 
 .linkBtn {
     background: none;
     border: none;
-    color: #3a1e4e;
+    color: #c5c5c5;
     cursor: pointer;
     text-decoration: underline;
 }
 
+.linkBtn:hover{
+    color: #fdfdff;
+}

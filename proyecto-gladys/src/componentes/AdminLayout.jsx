@@ -5,7 +5,6 @@ const navItems = [
   { to: "/ventas",    icon: "🍣", label: "Ventas"     },
   { to: "/nomina",    icon: "👥", label: "Nómina"     },
   { to: "/finanzas",  icon: "📊", label: "Finanzas"   },
-  { to: "/inventario",icon: "📦", label: "Inventario" },
 ];
 
 export default function AdminLayout() {

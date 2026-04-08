@@ -46,7 +46,6 @@ export default function Ventas() {
         </div>
         <div className="ventas-header-right">
           <div className="time-chip">📅 Lunes 9 Mar, 2026</div>
-          <button className="btn btn-ghost">📥 Exportar</button>
           <button className="btn btn-red" onClick={() => setModalAbierto(true)}>
             ＋ Registrar Venta
           </button>

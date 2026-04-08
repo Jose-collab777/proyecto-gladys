@@ -4,7 +4,6 @@ import AdminLayout from "./componentes/AdminLayout";
 import Ventas from "./componentes/Ventas";
 import Nomina from "./Nomina";
 import Finanzas from "./Finanzas";
-import Inventario from "./Inventario";
 import Login from "./login";
 
 // Componente que protege rutas privadas
@@ -32,7 +31,6 @@ function App() {
         <Route path="ventas" element={<Ventas />} />
         <Route path="nomina" element={<Nomina />} />
         <Route path="finanzas" element={<Finanzas />} />
-        <Route path="inventario" element={<Inventario />} />
       </Route>
 
       {/* Redirige cualquier ruta desconocida al login */}
