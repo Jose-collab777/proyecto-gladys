@@ -1,24 +1,25 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLayout from "./componentes/AdminLayout";
-
+import Register from "./Register";
 import Ventas from "./componentes/Ventas";
 import Nomina from "./Nomina";
 import Finanzas from "./Finanzas";
-import Login from "./login";
+import Login from "./login"; // 👈 IMPORTANTE mayúscula
 
-// Componente que protege rutas privadas
+// Protege rutas
 function RutaPrivada({ children }) {
-  const estaAutenticado = localStorage.getItem("token"); // o tu lógica de auth
+  const estaAutenticado = localStorage.getItem("token");
   return estaAutenticado ? children : <Navigate to="/login" />;
 }
 
 function App() {
   return (
     <Routes>
-      {/* Ruta pública: login */}
+      {/* Públicas */}
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-      {/* Rutas privadas protegidas */}
+      {/* Privadas */}
       <Route
         path="/"
         element={
@@ -27,13 +28,12 @@ function App() {
           </RutaPrivada>
         }
       >
-       
         <Route path="ventas" element={<Ventas />} />
         <Route path="nomina" element={<Nomina />} />
         <Route path="finanzas" element={<Finanzas />} />
       </Route>
 
-      {/* Redirige cualquier ruta desconocida al login */}
+      {/* Redirección */}
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
