@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./Ventas.css";
-import ModalVenta from "./ModalVenta"
+import ModalVenta from "./ModalVenta";
+
 const ventasData = {
   "7d": [
     { day: "Lun", sales: 12400, orders: 98  },
@@ -25,13 +26,13 @@ const ventasData = {
 };
 
 export default function Ventas() {
-  const [seg, setSeg]               = useState("7d");
+  const [seg, setSeg]                   = useState("7d");
   const [modalAbierto, setModalAbierto] = useState(false);
 
-  const data        = ventasData[seg];
-  const maxS        = Math.max(...data.map((d) => d.sales));
-  const maxO        = Math.max(...data.map((d) => d.orders));
-  const totalVentas  = data.reduce((a, d) => a + d.sales, 0);
+  const data         = ventasData[seg];
+  const maxS         = Math.max(...data.map((d) => d.sales));
+  const maxO         = Math.max(...data.map((d) => d.orders));
+  const totalVentas  = data.reduce((a, d) => a + d.sales,  0);
   const totalOrdenes = data.reduce((a, d) => a + d.orders, 0);
   const ticketProm   = Math.round(totalVentas / totalOrdenes);
 
@@ -148,8 +149,8 @@ export default function Ventas() {
           <tbody>
             {data.map((d, i) => {
               const prev = data[i - 1];
-              const diff = prev ? d.sales - prev.sales : null;
-              const pct  = prev ? ((diff / prev.sales) * 100).toFixed(1) : null;
+              const diff = prev != null ? d.sales - prev.sales : null;
+              const pct  = prev != null ? ((diff / prev.sales) * 100).toFixed(1) : null;
               return (
                 <tr key={d.day}>
                   <td className="td-day">{d.day}</td>

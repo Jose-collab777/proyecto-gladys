@@ -2,22 +2,22 @@ import { useState } from "react";
 import "./componentes/EmpleadosTable.css";
 
 const empleadosData = [
-  { id: 1, nombre: "Kenji Tanaka", puesto: "Chef Principal", departamento: "Cocina", salario: 18500, estado: "Activo", turno: "Mañana" },
-  { id: 2, nombre: "Yuki Sato", puesto: "Sous Chef", departamento: "Cocina", salario: 14200, estado: "Activo", turno: "Tarde" },
-  { id: 3, nombre: "Carla Mendoza", puesto: "Cajera", departamento: "Caja", salario: 9800, estado: "Activo", turno: "Mañana" },
-  { id: 4, nombre: "Luis Herrera", puesto: "Mesero", departamento: "Servicio", salario: 8500, estado: "Activo", turno: "Noche" },
-  { id: 5, nombre: "Ana García", puesto: "Mesera", departamento: "Servicio", salario: 8500, estado: "Inactivo", turno: "Tarde" },
-  { id: 6, nombre: "Roberto Díaz", puesto: "Ayudante de Cocina", departamento: "Cocina", salario: 7200, estado: "Activo", turno: "Mañana" },
-  { id: 7, nombre: "Sofía López", puesto: "Hostess", departamento: "Servicio", salario: 8000, estado: "Activo", turno: "Noche" },
+  { id: 1, nombre: "Kenji Tanaka",   puesto: "Chef Principal",     departamento: "Cocina",   salario: 18500, estado: "Activo",   turno: "Mañana" },
+  { id: 2, nombre: "Yuki Sato",      puesto: "Sous Chef",          departamento: "Cocina",   salario: 14200, estado: "Activo",   turno: "Tarde"  },
+  { id: 3, nombre: "Carla Mendoza",  puesto: "Cajera",             departamento: "Caja",     salario: 9800,  estado: "Activo",   turno: "Mañana" },
+  { id: 4, nombre: "Luis Herrera",   puesto: "Mesero",             departamento: "Servicio", salario: 8500,  estado: "Activo",   turno: "Noche"  },
+  { id: 5, nombre: "Ana García",     puesto: "Mesera",             departamento: "Servicio", salario: 8500,  estado: "Inactivo", turno: "Tarde"  },
+  { id: 6, nombre: "Roberto Díaz",   puesto: "Ayudante de Cocina", departamento: "Cocina",   salario: 7200,  estado: "Activo",   turno: "Mañana" },
+  { id: 7, nombre: "Sofía López",    puesto: "Hostess",            departamento: "Servicio", salario: 8000,  estado: "Activo",   turno: "Noche"  },
 ];
 
 export default function EmpleadosTable() {
-  const [busqueda, setBusqueda] = useState("");
+  const [busqueda, setBusqueda]       = useState("");
   const [filtroEstado, setFiltroEstado] = useState("Todos");
   const [modalAbierto, setModalAbierto] = useState(false);
-  const [empleados, setEmpleados] = useState(empleadosData);
-  const [nuevoEmp, setNuevoEmp] = useState({
-    nombre: "", puesto: "", departamento: "", salario: "", estado: "Activo", turno: "Mañana"
+  const [empleados, setEmpleados]     = useState(empleadosData);
+  const [nuevoEmp, setNuevoEmp]       = useState({
+    nombre: "", puesto: "", departamento: "", salario: "", estado: "Activo", turno: "Mañana",
   });
 
   const empleadosFiltrados = empleados.filter(e => {
@@ -46,7 +46,9 @@ export default function EmpleadosTable() {
           <h3 className="et-titulo">Empleados</h3>
           <p className="et-subtitulo">Gestión del personal activo e inactivo</p>
         </div>
-        <button className="et-btn-agregar" onClick={() => setModalAbierto(true)}>+ Nuevo Empleado</button>
+        <button className="et-btn-agregar" onClick={() => setModalAbierto(true)}>
+          + Nuevo Empleado
+        </button>
       </div>
 
       <div className="et-controles">
@@ -63,13 +65,26 @@ export default function EmpleadosTable() {
               key={f}
               className={`et-filtro-btn ${filtroEstado === f ? "activo" : ""}`}
               onClick={() => setFiltroEstado(f)}
-            >{f}</button>
+            >
+              {f}
+            </button>
           ))}
         </div>
       </div>
 
       <div className="et-tabla-wrapper">
         <table className="et-tabla">
+          {/* ── colgroup: define anchos fijos por columna ── */}
+          <colgroup>
+            <col /> {/* Empleado */}
+            <col /> {/* Puesto */}
+            <col /> {/* Departamento */}
+            <col /> {/* Turno */}
+            <col /> {/* Salario */}
+            <col /> {/* Estado */}
+            <col /> {/* Acciones */}
+          </colgroup>
+
           <thead>
             <tr>
               <th>Empleado</th>
@@ -106,33 +121,35 @@ export default function EmpleadosTable() {
             ))}
           </tbody>
         </table>
+
         {empleadosFiltrados.length === 0 && (
           <p className="et-vacio">No se encontraron empleados.</p>
         )}
       </div>
 
+      {/* ── MODAL ── */}
       {modalAbierto && (
         <div className="et-modal-overlay" onClick={() => setModalAbierto(false)}>
           <div className="et-modal" onClick={e => e.stopPropagation()}>
             <h3 className="et-modal-titulo">Nuevo Empleado</h3>
             <div className="et-modal-campos">
-              <input className="et-input" placeholder="Nombre completo" value={nuevoEmp.nombre} onChange={e => setNuevoEmp({...nuevoEmp, nombre: e.target.value})} />
-              <input className="et-input" placeholder="Puesto" value={nuevoEmp.puesto} onChange={e => setNuevoEmp({...nuevoEmp, puesto: e.target.value})} />
-              <input className="et-input" placeholder="Departamento" value={nuevoEmp.departamento} onChange={e => setNuevoEmp({...nuevoEmp, departamento: e.target.value})} />
-              <input className="et-input" placeholder="Salario mensual" type="number" value={nuevoEmp.salario} onChange={e => setNuevoEmp({...nuevoEmp, salario: e.target.value})} />
-              <select className="et-input" value={nuevoEmp.turno} onChange={e => setNuevoEmp({...nuevoEmp, turno: e.target.value})}>
+              <input className="et-input" placeholder="Nombre completo"   value={nuevoEmp.nombre}        onChange={e => setNuevoEmp({ ...nuevoEmp, nombre:        e.target.value })} />
+              <input className="et-input" placeholder="Puesto"            value={nuevoEmp.puesto}        onChange={e => setNuevoEmp({ ...nuevoEmp, puesto:        e.target.value })} />
+              <input className="et-input" placeholder="Departamento"      value={nuevoEmp.departamento}  onChange={e => setNuevoEmp({ ...nuevoEmp, departamento:  e.target.value })} />
+              <input className="et-input" placeholder="Salario mensual"   type="number" value={nuevoEmp.salario} onChange={e => setNuevoEmp({ ...nuevoEmp, salario: e.target.value })} />
+              <select className="et-input" value={nuevoEmp.turno}   onChange={e => setNuevoEmp({ ...nuevoEmp, turno:  e.target.value })}>
                 <option>Mañana</option>
                 <option>Tarde</option>
                 <option>Noche</option>
               </select>
-              <select className="et-input" value={nuevoEmp.estado} onChange={e => setNuevoEmp({...nuevoEmp, estado: e.target.value})}>
+              <select className="et-input" value={nuevoEmp.estado}  onChange={e => setNuevoEmp({ ...nuevoEmp, estado: e.target.value })}>
                 <option>Activo</option>
                 <option>Inactivo</option>
               </select>
             </div>
             <div className="et-modal-botones">
               <button className="et-btn-cancelar" onClick={() => setModalAbierto(false)}>Cancelar</button>
-              <button className="et-btn-agregar" onClick={handleAgregar}>Agregar</button>
+              <button className="et-btn-agregar"  onClick={handleAgregar}>Agregar</button>
             </div>
           </div>
         </div>

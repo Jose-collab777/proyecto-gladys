@@ -11,7 +11,6 @@ const Login = () => {
     // simula login
     localStorage.setItem("token", "autenticado");
 
-    // 👇 te manda directo a ventas (como querías)
     navigate("/ventas");
   };
 
@@ -42,8 +41,7 @@ const Login = () => {
           <button
             type="button"
             className="linkBtn"
-            onClick={() => navigate("/passwordChange")}
-          >
+onClick={() => navigate("/olvide-contrasena")}          >
             Olvidé mi contraseña
           </button>
         </div>
