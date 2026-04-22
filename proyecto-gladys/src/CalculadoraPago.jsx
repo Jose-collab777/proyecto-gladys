@@ -1,92 +1,118 @@
 import { useState } from "react";
 import "./componentes/CalculadoraPago.css";
 
-const IMSS_RATE = 0.0315;
-const ISR_TABLA = [
-  { limite: 8952, tasa: 0.0192, cuota: 0 },
-  { limite: 21175, tasa: 0.064, cuota: 172 },
-  { limite: 37200, tasa: 0.1088, cuota: 956 },
-  { limite: 433000, tasa: 0.16, cuota: 3530 },
-  { limite: Infinity, tasa: 0.30, cuota: 74640 },
+// Lista de empleados con sus salarios (tomados de EmpleadosTable)
+const EMPLEADOS = [
+  { id: 1, nombre: "Kenji Tanaka",   puesto: "Chef Principal",     salario: 18500 },
+  { id: 2, nombre: "Yuki Sato",      puesto: "Sous Chef",          salario: 14200 },
+  { id: 3, nombre: "Carla Mendoza",  puesto: "Cajera",             salario: 9800  },
+  { id: 4, nombre: "Luis Herrera",   puesto: "Mesero",             salario: 8500  },
+  { id: 5, nombre: "Ana García",     puesto: "Mesera",             salario: 8500  },
+  { id: 6, nombre: "Roberto Díaz",   puesto: "Ayudante de Cocina", salario: 7200  },
+  { id: 7, nombre: "Sofía López",    puesto: "Hostess",            salario: 8000  },
 ];
 
-function calcularISR(salarioMensual) {
-  for (const fila of ISR_TABLA) {
-    if (salarioMensual <= fila.limite) {
-      return fila.cuota + (salarioMensual - (fila.cuota === 0 ? 0 : 0)) * fila.tasa;
-    }
-  }
-  return 0;
-}
-
 export default function CalculadoraPago() {
-  const [salarioBase, setSalarioBase] = useState("");
+  const [empleadoId, setEmpleadoId] = useState("");
   const [horasExtra, setHorasExtra] = useState(0);
-  const [bonos, setBonos] = useState(0);
-  const [resultado, setResultado] = useState(null);
+  const [resultado, setResultado]   = useState(null);
+
+  const empleadoSeleccionado = EMPLEADOS.find(e => e.id === parseInt(empleadoId));
 
   const calcular = () => {
-    const base = parseFloat(salarioBase) || 0;
-    const extra = parseFloat(horasExtra) || 0;
-    const bono = parseFloat(bonos) || 0;
+    if (!empleadoSeleccionado) return;
+
+    const base         = empleadoSeleccionado.salario;
+    const extra        = parseFloat(horasExtra) || 0;
     const valorHoraExtra = (base / 30 / 8) * 2;
-    const totalExtra = extra * valorHoraExtra;
-    const ingresoTotal = base + totalExtra + bono;
-    const imss = ingresoTotal * IMSS_RATE;
-    const isr = calcularISR(ingresoTotal) * 0.25; // simplificado quincenal
-    const totalDeducciones = imss + isr;
-    const netoAPagar = ingresoTotal - totalDeducciones;
+    const totalExtra   = extra * valorHoraExtra;
+    const totalPercepciones = base + totalExtra;
 
     setResultado({
+      empleado: empleadoSeleccionado.nombre,
       salarioBase: base,
       horasExtraImporte: totalExtra,
-      bonos: bono,
-      ingresoTotal,
-      imss,
-      isr,
-      totalDeducciones,
-      netoAPagar,
+      totalPercepciones,
     });
   };
 
-  const fmt = (n) => `$${n.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const fmt = (n) =>
+    `$${n.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
   return (
     <div className="cp-container">
       <div className="cp-header">
         <h3 className="cp-titulo">Calculadora de Pago</h3>
-        <p className="cp-subtitulo">Calcula el salario neto con deducciones</p>
+        <p className="cp-subtitulo">Calcula el salario neto del empleado</p>
       </div>
 
       <div className="cp-body">
         <div className="cp-form">
+
+          {/* Selector de empleado */}
           <div className="cp-campo">
-            <label className="cp-label">Salario Base Mensual</label>
-            <div className="cp-input-prefix">
-              <span>$</span>
-              <input className="cp-input" type="number" placeholder="0.00" value={salarioBase} onChange={e => setSalarioBase(e.target.value)} />
-            </div>
+            <label className="cp-label">Empleado</label>
+            <select
+              className="cp-input cp-select"
+              value={empleadoId}
+              onChange={e => {
+                setEmpleadoId(e.target.value);
+                setResultado(null);
+              }}
+            >
+              <option value="">— Selecciona un empleado —</option>
+              {EMPLEADOS.map(emp => (
+                <option key={emp.id} value={emp.id}>
+                  {emp.nombre} · {emp.puesto}
+                </option>
+              ))}
+            </select>
           </div>
 
+          {/* Salario asignado (solo lectura) */}
+          {empleadoSeleccionado && (
+            <div className="cp-campo">
+              <label className="cp-label">Salario Base Mensual</label>
+              <div className="cp-input-prefix cp-readonly">
+                <span>$</span>
+                <input
+                  className="cp-input"
+                  type="text"
+                  value={empleadoSeleccionado.salario.toLocaleString("es-MX")}
+                  readOnly
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Horas extra */}
           <div className="cp-campo">
             <label className="cp-label">Horas Extra</label>
-            <input className="cp-input" type="number" placeholder="0" min="0" value={horasExtra} onChange={e => setHorasExtra(e.target.value)} />
+            <input
+              className="cp-input"
+              type="number"
+              placeholder="0"
+              min="0"
+              value={horasExtra}
+              onChange={e => setHorasExtra(e.target.value)}
+            />
           </div>
 
-          <div className="cp-campo">
-            <label className="cp-label">Bonos / Comisiones</label>
-            <div className="cp-input-prefix">
-              <span>$</span>
-              <input className="cp-input" type="number" placeholder="0.00" value={bonos} onChange={e => setBonos(e.target.value)} />
-            </div>
-          </div>
-
-          <button className="cp-btn-calcular" onClick={calcular}>Calcular Nómina</button>
+          <button
+            className="cp-btn-calcular"
+            onClick={calcular}
+            disabled={!empleadoSeleccionado}
+          >
+            Calcular Nómina
+          </button>
         </div>
 
         {resultado && (
           <div className="cp-resultado">
             <h4 className="cp-resultado-titulo">Desglose de Pago</h4>
+            <p style={{ fontSize: "13px", color: "#888", marginBottom: "12px" }}>
+              {resultado.empleado}
+            </p>
 
             <div className="cp-seccion">
               <p className="cp-seccion-label">PERCEPCIONES</p>
@@ -98,35 +124,15 @@ export default function CalculadoraPago() {
                 <span>Horas Extra</span>
                 <span>{fmt(resultado.horasExtraImporte)}</span>
               </div>
-              <div className="cp-fila">
-                <span>Bonos</span>
-                <span>{fmt(resultado.bonos)}</span>
-              </div>
               <div className="cp-fila total">
                 <span>Total Percepciones</span>
-                <span>{fmt(resultado.ingresoTotal)}</span>
-              </div>
-            </div>
-
-            <div className="cp-seccion">
-              <p className="cp-seccion-label">DEDUCCIONES</p>
-              <div className="cp-fila">
-                <span>IMSS (3.15%)</span>
-                <span className="cp-negativo">-{fmt(resultado.imss)}</span>
-              </div>
-              <div className="cp-fila">
-                <span>ISR (estimado)</span>
-                <span className="cp-negativo">-{fmt(resultado.isr)}</span>
-              </div>
-              <div className="cp-fila total">
-                <span>Total Deducciones</span>
-                <span className="cp-negativo">-{fmt(resultado.totalDeducciones)}</span>
+                <span>{fmt(resultado.totalPercepciones)}</span>
               </div>
             </div>
 
             <div className="cp-neto">
-              <span>NETO A PAGAR</span>
-              <span className="cp-neto-monto">{fmt(resultado.netoAPagar)}</span>
+              <span>TOTAL A PAGAR</span>
+              <span className="cp-neto-monto">{fmt(resultado.totalPercepciones)}</span>
             </div>
           </div>
         )}

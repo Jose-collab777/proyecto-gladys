@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Ventas.css";
-import ModalVenta from "./ModalVenta";
 
 const ventasData = {
   "7d": [
@@ -25,9 +24,15 @@ const ventasData = {
   ],
 };
 
+function getFechaActual() {
+  const ahora = new Date();
+  const dias  = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+  const meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+  return `${dias[ahora.getDay()]} ${ahora.getDate()} ${meses[ahora.getMonth()]}, ${ahora.getFullYear()}`;
+}
+
 export default function Ventas() {
-  const [seg, setSeg]                   = useState("7d");
-  const [modalAbierto, setModalAbierto] = useState(false);
+  const [seg, setSeg] = useState("7d");
 
   const data         = ventasData[seg];
   const maxS         = Math.max(...data.map((d) => d.sales));
@@ -42,14 +47,11 @@ export default function Ventas() {
       {/* ── HEADER ── */}
       <div className="ventas-header">
         <div>
-          <h1 className="ventas-title">Ventas</h1>
+          <h1 className="ventas-title">Inicio</h1>
           <p className="ventas-sub">売上管理 · Reporte de ingresos y rendimiento</p>
         </div>
         <div className="ventas-header-right">
-          <div className="time-chip">📅 Lunes 9 Mar, 2026</div>
-          <button className="btn btn-red" onClick={() => setModalAbierto(true)}>
-            ＋ Registrar Venta
-          </button>
+          <div className="time-chip">📅 {getFechaActual()}</div>
         </div>
       </div>
 
@@ -172,17 +174,6 @@ export default function Ventas() {
           </tbody>
         </table>
       </div>
-
-      {/* ── MODAL ── */}
-      {modalAbierto && (
-        <ModalVenta
-          onClose={() => setModalAbierto(false)}
-          onGuardar={(venta) => {
-            console.log("Venta a enviar al backend:", venta);
-            setModalAbierto(false);
-          }}
-        />
-      )}
 
     </div>
   );
